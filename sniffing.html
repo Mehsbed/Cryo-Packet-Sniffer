@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryo Packet Sniffer - Sniffing</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function fetchResults() {
+            fetch('/sniff-results').then(r => r.json()).then(data => {
+                let table = document.getElementById('results-table');
+                table.innerHTML = `<tr><th>Source IP</th><th>Destination IP</th><th>Protocol</th><th>Length</th><th>Security</th></tr>`;
+                data.forEach(row => {
+                    table.innerHTML += `<tr><td>${row.src_ip}</td><td>${row.dst_ip}</td><td>${row.proto}</td><td>${row.length}</td><td>${row.security}</td></tr>`;
+                });
+            });
+        }
+        setInterval(fetchResults, 1000);
+        window.onload = fetchResults;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Cryo Packet Sniffer</h1>
+        <p>Sniffing for 10 seconds. Results will update live below.</p>
+        <table id="results-table" class="material-table"></table>
+        <a href="/" class="material-btn">Back to Home</a>
+    </div>
+</body>
+</html> 
